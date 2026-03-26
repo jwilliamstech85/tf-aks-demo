@@ -7,7 +7,7 @@ variable "log_analytics_workspace_rg_name" {
 variable "log_analytics_workspace_name" {
   description = "(Required) Specifies the name of the log analytics workspace"
   type        = string
-  default     = "tf-aks-law"
+  default     = "tf-aks"
 }
 
 variable "log_analytics_workspace_location" {
@@ -27,26 +27,30 @@ variable "log_analytics_workspace_sku" {
   }
 }
 
-variable "solution_plan_map" {
+/*variable "solution_plan_map" {
   description = "(Required) Specifies solutions to deploy to log analytics workspace"
   type        = map(any)
   default = {
-    solution_name = "ContainerInsight"
+    solution_name = "ContainerInsights"
     product       = "OMSGallery/ContainerInsights"
     publisher     = "Microsoft"
   }
-}
+}*/
 
-variable "solution_plan_product" {
-  description = "(Required) Specifies the product of the solution plan"
-  type        = string
-  default     = "OMSGallery/ContainerInsights"
-}
-
-variable "solution_plan_publisher" {
-  description = "(Required) Specifies the publisher of the solution plan"
-  type        = string
-  default     = "Microsoft"
+variable "solution_plan_map" {
+  type = map(object({
+    solution_name = string
+    publisher     = string
+    product       = string
+  }))
+  description = "(Required) Specifies solutions to deploy to log analytics workspace"
+  default = {
+    "ContainerInsights" = {
+      solution_name = "ContainerInsights"
+      publisher     = "Microsoft"
+      product       = "OMSGallery/ContainerInsights"
+    }
+  }
 }
 
 variable "log_analytics_retention_days" {

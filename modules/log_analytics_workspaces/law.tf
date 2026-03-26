@@ -31,14 +31,14 @@ resource "azurerm_log_analytics_workspace" "law" {
 # Create log analytics workspace solution
 resource "azurerm_log_analytics_solution" "law_solution" {
   for_each              = var.solution_plan_map
-  solution_name         = each.key
+  solution_name         = each.value.solution_name
   resource_group_name   = azurerm_resource_group.law.name
   location              = var.log_analytics_workspace_location
   workspace_resource_id = azurerm_log_analytics_workspace.law.id
   workspace_name        = azurerm_log_analytics_workspace.law.name
   plan {
-    product   = var.solution_plan_product
-    publisher = var.solution_plan_publisher
+    product   = each.value.product
+    publisher = each.value.publisher
   }
   tags = merge(local.default_tags, var.log_analytics_tags)
   lifecycle {
