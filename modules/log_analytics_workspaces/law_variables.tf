@@ -27,16 +27,6 @@ variable "log_analytics_workspace_sku" {
   }
 }
 
-/*variable "solution_plan_map" {
-  description = "(Required) Specifies solutions to deploy to log analytics workspace"
-  type        = map(any)
-  default = {
-    solution_name = "ContainerInsights"
-    product       = "OMSGallery/ContainerInsights"
-    publisher     = "Microsoft"
-  }
-}*/
-
 variable "solution_plan_map" {
   type = map(object({
     solution_name = string
