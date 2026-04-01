@@ -24,8 +24,8 @@ resource "azurerm_windows_virtual_machine" "jumpbox_vm" {
 }
 
 # Create a Private endpoint for bastion access to the jumpbox VM
-resource "azurerm_private_endpoint" "example" {
-  name                = "example-endpoint"
+/*resource "azurerm_private_endpoint" "jumpbox_private_endpoint" {
+  name                = "jumpbox-private-endpoint"
   location            = var.jumpbox_location
   resource_group_name = var.jumpbox_rg_name
   subnet_id           = var.jumpbox_subnet_id
@@ -35,7 +35,7 @@ resource "azurerm_private_endpoint" "example" {
     private_connection_resource_id = azurerm_windows_virtual_machine.jumpbox_vm.id
     is_manual_connection           = false
   }
-}
+}*/
 
 # 2. Network Security Group to allow RDP
 resource "azurerm_network_security_group" "jumpbox_nsg" {

@@ -69,18 +69,36 @@ module "bastion" {
   bastion_name        = var.bastion_name
   bastion_pip_name    = var.bastion_pip_name
   bastion_subnet_id   = module.network.hub_bastion_subnet_id
-  bastion_location    = var.hub_location
-  bastion_rg_name     = var.hub_vnet_rg_name
-  bastion_subnet_name = var.hub_bastion_subnet_name
+  bastion_location    = module.network.hub_location
+  bastion_rg_name     = module.network.hub_vnet_rg_name
+  bastion_subnet_name = module.network.hub_bastion_subnet_name
   bastion_sku         = var.bastion_sku
 }
 
 module "jumpbox" {
   source                 = "./modules/jumpbox"
-  jumpbox_location       = var.hub_location
-  jumpbox_rg_name        = var.hub_vnet_rg_name
+  jumpbox_location       = module.network.hub_location
+  jumpbox_rg_name        = module.network.hub_vnet_rg_name
   jumpbox_subnet_id      = module.network.jumpbox_subnet_id
   jumpbox_admin_username = var.jumpbox_admin_username
   jumpbox_admin_password = var.jumpbox_admin_password
   nsg_allowed_ip_range   = var.nsg_allowed_ip_range
 }
+
+/*module "appgateway" {
+  source                 = "./modules/application_gateway"
+
+  appgtw_name            = var.appgtw_name
+  appgtw_sku_size        = var.appgtw_sku_size
+  appgtw_sku_tier        = var.appgtw_sku_tier
+  appgtw_sku_capacity    = var.appgtw_sku_capacity
+  appgtw_pip_name        = var.appgtw_pip_name
+  pip_allocation_method  = var.pip_allocation_method
+  pip_sku                = var.pip_sku
+  appgtw_pip_location    = var.appgtw_pip_location
+
+  depends_on = [
+    module.rg,
+    module.network,
+  ]
+}*/

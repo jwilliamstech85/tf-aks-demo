@@ -269,6 +269,16 @@ variable "bastion_sku" {
 }
 
 # ========================== jumpbox =====================================
+variable "jumpbox_rg_name" {
+  description = "Specifies the name of the resource group for the jumpbox"
+  type        = string
+}
+
+variable "jumpbox_location" {
+  description = "Specifies the location of the jumpbox"
+  type        = string
+}
+
 variable "jumpbox_admin_username" {
   description = "Specifies the admin username of the jumpbox"
   type        = string

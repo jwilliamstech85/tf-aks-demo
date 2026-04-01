@@ -9,6 +9,7 @@ variable "vnet_suffix" {
   default     = "vnet"
   description = "Suffix of the vnet name."
 }
+
 variable "subnet_suffix" {
   type        = string
   default     = "snet"

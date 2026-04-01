@@ -45,6 +45,19 @@ resource "azurerm_subnet" "hub_bastion_subnet" {
   ]
 }
 
+// jumpbox VM server subnet
+resource "azurerm_subnet" "jumpbox_subnet" {
+  name                                          = var.jumpbox_subnet_name
+  resource_group_name                           = azurerm_virtual_network.hub_vnet.resource_group_name
+  virtual_network_name                          = azurerm_virtual_network.hub_vnet.name
+  address_prefixes                              = var.jumpbox_subnet_address_prefix
+  private_endpoint_network_policies             = "Disabled"
+  private_link_service_network_policies_enabled = false
+  depends_on = [
+    azurerm_virtual_network.hub_vnet
+  ]
+}
+
 // Create hub application gateway subnet
 resource "azurerm_subnet" "appgtw" {
   name                                          = lower("${var.appgtw_subnet_name}-${var.subnet_suffix}")
@@ -83,7 +96,7 @@ resource "azurerm_virtual_network" "spoke_vnet" {
 }
 
 // gateway subnet
-resource "azurerm_subnet" "gateway" {
+/*resource "azurerm_subnet" "gateway" {
   name                 = "gateway"
   resource_group_name  = azurerm_virtual_network.hub_vnet.resource_group_name
   virtual_network_name = azurerm_virtual_network.hub_vnet.name
@@ -91,7 +104,7 @@ resource "azurerm_subnet" "gateway" {
   depends_on = [
     azurerm_virtual_network.hub_vnet
   ]
-}
+}*/
 
 // VPN gateway subnet
 resource "azurerm_subnet" "vpn_gateway" {
@@ -133,19 +146,6 @@ resource "azurerm_subnet" "aks" {
   resource_group_name                           = azurerm_virtual_network.spoke_vnet.resource_group_name
   virtual_network_name                          = azurerm_virtual_network.spoke_vnet.name
   address_prefixes                              = var.aks_address_prefixes
-  private_endpoint_network_policies             = "Disabled"
-  private_link_service_network_policies_enabled = false
-  depends_on = [
-    azurerm_virtual_network.spoke_vnet
-  ]
-}
-
-// jump VM server subnet
-resource "azurerm_subnet" "jumpbox_subnet" {
-  name                                          = lower("${var.jumpbox_subnet_name}")
-  resource_group_name                           = azurerm_virtual_network.spoke_vnet.resource_group_name
-  virtual_network_name                          = azurerm_virtual_network.spoke_vnet.name
-  address_prefixes                              = var.jumpbox_subnet_address_prefix
   private_endpoint_network_policies             = "Disabled"
   private_link_service_network_policies_enabled = false
   depends_on = [

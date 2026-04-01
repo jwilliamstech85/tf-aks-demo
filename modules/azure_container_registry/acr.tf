@@ -118,7 +118,7 @@ resource "azurerm_private_dns_zone_virtual_network_link" "acr_pdz_vnet_link" {
 }
 
 # Create private endpoint for Azure container registry
-resource "azurerm_private_endpoint" "pe_acr" {
+/*resource "azurerm_private_endpoint" "pe_acr" {
   name                = lower("${azurerm_container_registry.acr.name}-${var.pe_suffix}")
   location            = azurerm_container_registry.acr.location
   resource_group_name = azurerm_container_registry.acr.resource_group_name
@@ -147,4 +147,4 @@ resource "azurerm_private_endpoint" "pe_acr" {
     azurerm_container_registry.acr,
     azurerm_private_dns_zone.pdz_acr,
   ]
-}
+}*/

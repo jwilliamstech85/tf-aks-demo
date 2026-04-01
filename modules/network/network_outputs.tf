@@ -24,9 +24,9 @@ output "hub_vnet_id" {
   value       = azurerm_virtual_network.hub_vnet.id
 }
 
-output "subnet_gateway_id" {
+output "subnet_hub_gateway_id" {
   description = "Specifies the resource id of the gateway subnets"
-  value       = azurerm_subnet.gateway.id
+  value       = azurerm_subnet.hub_gateway.id
 }
 
 output "subnet_appgtw_id" {
